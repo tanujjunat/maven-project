@@ -24,7 +24,7 @@ stages{
 
         stage ('Deploy'){
             steps {
-                bat 'copy /Y *.war .'
+                bat 'copy /Y **/target/*.war C:/'
             }
         }
     }
