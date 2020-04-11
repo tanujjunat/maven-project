@@ -24,7 +24,7 @@ stages{
 
         stage ('Deploy'){
             steps {
-                bat 'copy **\\target\\*.war C:\\Softwares\\TomcatForJenkins\\apache-tomcat-8.5.54\\webapps'
+                bat 'copy **//target//*.war C:\\Softwares\\TomcatForJenkins\\apache-tomcat-8.5.54\\webapps'
             }
         }
     }
