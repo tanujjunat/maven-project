@@ -12,7 +12,7 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -x test'
             }
             post {
                 success {
@@ -23,7 +23,8 @@ stages{
         }
         stage ('Deploy to Staging'){
             steps {
-                   sh "scp oIdentityFile=/var/lib/jenkins/ec2keyvalue.pem **/target/*.war ec2-user@${params.tomcat_aws}:/home/ec2-user"
+                    sh "su ec2-user"
+                   sh "scp -i /home/ec2-user/jenkins/ec2keyvalue.pem **/target/*.war ec2-user@${params.tomcat_aws}:/home/ec2-user"
             }
         }
     }
