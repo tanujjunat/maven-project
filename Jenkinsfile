@@ -2,17 +2,17 @@ pipeline {
     agent any
 
     parameters {
-         string(name: 'tomcatServer', defaultValue: 'localhost', description: 'Tomcat Server')
+         string(name: 'tomcat_aws', defaultValue: '13.234.177.90', description: 'AWS Tomcat Server')
     }
 
     triggers {
-         pollSCM('* * * * *') // Polling Source Control
+         pollSCM('* * * * *')
      }
 
 stages{
         stage('Build'){
             steps {
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
             post {
                 success {
@@ -22,9 +22,13 @@ stages{
             }
         }
 
-        stage ('Deploy'){
-            steps {
-                bat 'copy **//target//*.war C:\\Softwares\\TomcatForJenkins\\apache-tomcat-8.5.54\\webapps'
+        stage ('Deployments'){
+            parallel{
+                stage ('Deploy to Staging'){
+                    steps {
+                        sh "scp -i /home/ec2-user/ec2keyvalue.pem **/target/*.war ec2-user@${params.tomcat_aws}:/var/lib/tomcat8/webapps"
+                    }
+                }
             }
         }
     }
