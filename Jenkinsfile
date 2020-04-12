@@ -23,8 +23,7 @@ stages{
         }
         stage ('Deploy to Staging'){
             steps {
-                        sh "sudo su"
-                        sh "scp -i /home/ec2-user/ec2keyvalue.pem **/target/*.war ec2-user@${params.tomcat_aws}:/home/ec2-user"
+                   sh "scp -i /home/ec2-user/ec2keyvalue.pem **/target/*.war ec2-user@${params.tomcat_aws}:/home/ec2-user"
             }
         }
     }
