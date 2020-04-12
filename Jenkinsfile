@@ -5,9 +5,9 @@ pipeline {
          string(name: 'tomcat_aws', defaultValue: '13.234.177.90', description: 'AWS Tomcat Server')
     }
 
-    triggers {
-         pollSCM('* * * * *')
-     }
+   // triggers {
+     //    pollSCM('* * * * *')
+   //  }
 
 stages{
         stage('Build'){
